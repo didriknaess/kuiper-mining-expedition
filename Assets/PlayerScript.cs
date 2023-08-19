@@ -3,15 +3,17 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
 
-    public Rigidbody2D Body;
+    private Rigidbody2D Body;
     private AudioManager Sfx;
     public int MaxVelocity;
     public LogicManager Logic;
     public bool IsAlive { get; set; }  = true;
     private AudioSource DeathNoise;
+    public GameObject Fireball;
 
     void Start()
     {
+        Body = gameObject.GetComponentInChildren<Rigidbody2D>();
         Sfx = GameObject.FindGameObjectWithTag("Sfx").GetComponent<AudioManager>();
         DeathNoise = GetComponent<AudioSource>();
     }
@@ -47,14 +49,24 @@ public class PlayerScript : MonoBehaviour
             Sfx.UnpauseMusic();
             Sfx.ButtonClicked();
             Logic.RestartGame();
-
         }
+
+        if (Logic.Multiplier > 0f) Logic.Multiplier -= Time.deltaTime;
+        if (Logic.Magnet > 0f) Logic.Magnet -= Time.deltaTime;
+        else Logic.DeactivateMagnet();
+        if (Logic.Fist > 0f) Logic.Fist -= Time.deltaTime;
     }
 
     // collision detection
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (IsAlive && Logic.Shielded)
+        Debug.Log("Collision!");
+        if (collision.gameObject.layer == 6) { }
+        else if (IsAlive && Logic.Fist > 0f)
+        {
+            Body.velocity = new Vector2(0, 0);
+        }
+        else if (IsAlive && Logic.Shielded)
         {
             Logic.DeactivateShield();
 
@@ -63,7 +75,7 @@ public class PlayerScript : MonoBehaviour
             if (collisionHeight < 0) Body.velocity = Vector2.up * 2;
             else Body.velocity = -Vector2.up * 2;
         }
-        else if (IsAlive) GameOver();
+        else if (IsAlive) { GameOver(); }
     }
 
     private void GameOver()
@@ -73,5 +85,10 @@ public class PlayerScript : MonoBehaviour
         Sfx.GameOver();
         Logic.GameOver();
         IsAlive = false;
+    }
+
+    public void SpawnFireball()
+    {
+        Instantiate(Fireball, new Vector3(transform.position.x + 1.3f, transform.position.y, 0), Quaternion.identity);
     }
 }

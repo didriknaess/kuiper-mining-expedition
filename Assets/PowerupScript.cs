@@ -37,7 +37,6 @@ public class PowerupScript : MonoBehaviour
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
         int r = Random.Range(0, Names.Length);
         Name = Names[r];
-        Config(0.2f, 0, 0, 0.2f);
 
         renderer.sprite = Resources.Load<Sprite>(Names[r]);
         ParticleSystem.MainModule ma = particles.main;
@@ -47,7 +46,7 @@ public class PowerupScript : MonoBehaviour
     // left movement & passive hover animation
     void Update()
     {
-        transform.position += Vector3.left * MoveSpeed * Time.deltaTime;
+        transform.position += MoveSpeed * Time.deltaTime * Vector3.left;
 
         float delta = 0.001f * Time.deltaTime;
         if (Increment) {
@@ -73,44 +72,13 @@ public class PowerupScript : MonoBehaviour
         if (collision.gameObject.layer == 6)
         {
             Sfx.ItemPickup();
-            if (Name.Equals("double_points")) Handle2xPoints();
-            else if (Name.Equals("magnet")) HandleMagnet();
-            else if (Name.Equals("fist")) HandleFist();
+            if (Name.Equals("double_points")) Logic.ActivateMultiplier();
+            else if (Name.Equals("magnet")) Logic.ActivateMagnet();
+            else if (Name.Equals("fist")) Logic.ActivateFist();
             else if (Name.Equals("shield")) Logic.ActivateShield();
-            else if (Name.Equals("bomb")) HandleBomb();
-            else if (Name.Equals("fireball")) HandleFireball();
+            else if (Name.Equals("bomb")) Logic.UseBomb();
+            else if (Name.Equals("fireball")) Logic.SpawnFireball();
             Destroy(gameObject);
         }
-    }
-
-    private void Config(float colliderScale, float offsetX, float offsetY, float radius)
-    {
-        // collider
-        var collider = gameObject.GetComponent<CircleCollider2D>();
-        gameObject.transform.localScale = new Vector3(colliderScale, colliderScale, 0);
-        collider.offset = new Vector2(offsetX, offsetY);
-        collider.radius = radius;
-    }
-
-    private void HandleBomb()
-    {
-
-    }
-
-    private void HandleFireball()
-    {
-
-    }
-
-    private void Handle2xPoints()
-    {
-    }
-
-    private void HandleMagnet()
-    {
-    }
-
-    private void HandleFist()
-    {
     }
 }

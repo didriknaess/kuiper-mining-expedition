@@ -10,12 +10,19 @@ public class LogicManager : MonoBehaviour
     public PlayerScript Player;
     private CapsuleCollider2D Collider;
     public GameObject Shield;
-    public int Multiplier { get; set; } = 1;
+    public Image Icon;
+    public Image Progress;
+    public GameObject Explosion;
+    public GameObject MagnetCollider;
+
     public bool Shielded { get; set; } = false;
+    public float Multiplier { get; set; } = 0f;
+    public float Magnet { get; set; } = 0f;
+    public float Fist { get; set; } = 0f;
 
     public void Start()
     {
-        Collider = Player.GetComponent<CapsuleCollider2D>();
+        Collider = Player.GetComponentInChildren<CapsuleCollider2D>();
     }
 
     [ContextMenu("Increase Score")]
@@ -27,7 +34,6 @@ public class LogicManager : MonoBehaviour
 
     public void RestartGame()
     {
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -55,5 +61,47 @@ public class LogicManager : MonoBehaviour
         Shield.SetActive(false);
         Collider.offset = new Vector2(0.005f, 0.03f);
         Collider.size = new Vector2(0.45f, 0.85f);
+    }
+
+    public void ActivateMultiplier()
+    {
+        Multiplier = 10f;
+        Magnet = 0f;
+        Fist = 0f;
+    }
+
+    public void ActivateMagnet()
+    {
+        Multiplier = 0f;
+        Magnet = 10f;
+        Fist = 0f;
+        MagnetCollider.SetActive(true);
+    }
+
+    public void DeactivateMagnet()
+    {
+        MagnetCollider.SetActive(false);
+    }
+
+    public void ActivateFist()
+    {
+        Multiplier = 0f;
+        Magnet = 0f;
+        Fist = 10f;
+    }
+
+    public void SpawnFireball()
+    {
+        Player.SpawnFireball();
+    }
+
+
+    public void UseBomb()
+    {
+        Instantiate(Explosion, new Vector3(Player.transform.position.x, Player.transform.position.y, 0), Quaternion.identity);
+        // destroy all asteroids
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("Asteroid");
+        foreach (GameObject go in gos)
+            go.GetComponent<AsteroidScript>().Destruct();
     }
 }

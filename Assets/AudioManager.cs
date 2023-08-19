@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager _instance;
-    private AudioSource[] Audio;
+    private AudioSource[] Songs;
+    private AudioSource[] SoundEffects;
+
+    /*private static AudioManager _instance;
+    
 
     public static AudioManager Instance
     {
@@ -19,15 +22,9 @@ public class AudioManager : MonoBehaviour
 
             return _instance;
         }
-    }
+    }*/
 
-    public void Start()
-    {
-        Awake();
-        PlayMainTrack();
-    }
-
-    public void Awake()
+    /*public void Awake()
     {
         if (_instance == null)
         {
@@ -42,51 +39,65 @@ public class AudioManager : MonoBehaviour
             if (this != _instance)
                 Destroy(gameObject);
         }
+    }*/
+
+    public void Start()
+    {
+        //Awake();
+        PlayMainTrack();
     }
+
+    
 
     public void PlayMainTrack()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[0].Play(); // main track
+        if (Songs == null) Songs = GetComponents<AudioSource>()[0..3];
+        Songs[0].Play(); // main track
     }
 
     public void PlayActionTrack()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[1].Play(); // action track
+        if (Songs == null) Songs = GetComponents<AudioSource>()[0..3];
+        Songs[1].Play(); // action track
     }
 
     public void PlayAlternativeTrack()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[2].Play(); // alternative track
+        if (Songs == null) Songs = GetComponents<AudioSource>()[0..3];
+        Songs[2].Play(); // alternative track
     }
 
     public void PauseMusic()
     {
-        foreach (AudioSource ae in Audio) ae.Pause();
+        foreach (AudioSource ae in Songs) ae.Pause();
     }
 
     public void UnpauseMusic()
     {
-        foreach (AudioSource ae in Audio) ae.UnPause();
+        foreach (AudioSource ae in Songs) ae.UnPause();
     }
 
     public void ItemPickup()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[3].Play(); // gem sfx
+        if (SoundEffects == null) SoundEffects = GetComponents<AudioSource>()[3..];
+        SoundEffects[0].Play(); // gem sfx
     }
 
     public void GameOver()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[4].Play(); // game over sfx
+        if (SoundEffects == null) SoundEffects = GetComponents<AudioSource>()[3..];
+        SoundEffects[1].Play(); // game over sfx
     }
 
     public void ButtonClicked()
     {
-        if (Audio == null) Audio = GetComponents<AudioSource>();
-        Audio[5].Play(); // button sfx
+        if (SoundEffects == null) SoundEffects = GetComponents<AudioSource>()[3..];
+        SoundEffects[2].Play(); // button sfx
+    }
+
+    public void Explosion()
+    {
+        if (SoundEffects == null) SoundEffects = GetComponents<AudioSource>()[3..];
+        SoundEffects[3].Play(); // explosion sfx
     }
 }

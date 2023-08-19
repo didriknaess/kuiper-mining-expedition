@@ -21,16 +21,22 @@ public class GemScript : MonoBehaviour
     public float MoveSpeed = 5;
 
     public bool Hover = true;
-    private float DeadZone = -50;
+    private readonly float DeadZone = -50;
     private float HoverVal = 0f;
-    private float MaxHoverVal = -0.0005f;
+    private readonly float MaxHoverVal = -0.0005f;
     private bool Increment = true;
+
+    private bool MagnetActive;
+    private Rigidbody2D Body;
+    private Vector3 TargetPosition;
+    public float AttractStrength = 5f;
 
     public double[] SpeedVector { get; set; }
     public uint LaunchFrames { get; set; } = 0;
 
     private void Start()
     {
+        Body = GetComponent<Rigidbody2D>();
         Logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicManager>();
         Sfx = GameObject.FindGameObjectWithTag("Sfx").GetComponent<AudioManager>();
         var particles = gameObject.GetComponent<ParticleSystem>();
@@ -41,7 +47,6 @@ public class GemScript : MonoBehaviour
         renderer.sprite = Resources.Load<Sprite>(Names[r]);
         ParticleSystem.MainModule ma = particles.main;
         ma.startColor = new Color(RgbVals[r][0], RgbVals[r][1], RgbVals[r][2]);
-        Debug.Log(ma.startColor.color);
         Value = Values[r];
     }
 
@@ -73,7 +78,6 @@ public class GemScript : MonoBehaviour
         // diagonal movement animation (from asteroid death)
         if (LaunchFrames > 1)
         {
-            Debug.Log(SpeedVector[0] + "," + SpeedVector[1]);
             transform.position += Vector3.left * (float)SpeedVector[0];
             transform.position += Vector3.up * (float)SpeedVector[1];
             LaunchFrames--;
@@ -84,7 +88,20 @@ public class GemScript : MonoBehaviour
             LaunchFrames--;
         }
 
+        // attraction if magnet is active
+        if (MagnetActive)
+        {
+            Vector2 targetDirection = TargetPosition - transform.position;
+            Body.velocity = targetDirection * AttractStrength;
+        }
+
         if (transform.position.x < DeadZone) Destroy(gameObject);
+    }
+
+    public void SetTarget(Vector3 pos)
+    {
+        TargetPosition = pos;
+        MagnetActive = true;
     }
 
     public void Launch(double[] vector, uint frameDuration)
@@ -100,7 +117,11 @@ public class GemScript : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            if (!Logic.IsGameOver()) Logic.AddScore(Value * Logic.Multiplier);
+            if (!Logic.IsGameOver())
+            {
+                if (Logic.Multiplier > 0f) { Logic.AddScore(Value * 2); }
+                else { Logic.AddScore(Value); }
+            }
             Sfx.ItemPickup();
             Destroy(gameObject);
         }

@@ -4,13 +4,15 @@ using System;
 public class AsteroidScript : MonoBehaviour
 {
     public float MoveSpeed = 5;
-    public float DeadZone = -5;
+    public readonly float DeadZone = -12f;
     private string TypeName;
     public GameObject Gem;
+    public GameObject Explosion;
+    private AudioManager Sfx;
 
     void Start()
     {
-        // choose 
+        Sfx = GameObject.FindGameObjectWithTag("Sfx").GetComponent<AudioManager>();
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
 
         int roll = UnityEngine.Random.Range(0, 6);
@@ -61,21 +63,31 @@ public class AsteroidScript : MonoBehaviour
     // deletion and score incrementation on player pickup
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.GetComponent<PlayerScript>() != null
+            || collision.gameObject.layer == 7)
         {
-            int spawns;
-            if (TypeName == "asteroid") spawns = UnityEngine.Random.Range(0, 3);
-            else spawns = UnityEngine.Random.Range(2, 5);
-            for (int i = 0; i <= spawns; i++)
-            {
-                double theta = UnityEngine.Random.Range(0, 360) * Mathf.PI / 180;
-                double[] vector = RotateVector(new double[] { 0.01, 0 }, theta);
-                GameObject loot = Instantiate(Gem, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                var gs = loot.GetComponentInChildren<GemScript>();
-                gs.Launch(vector, 60);
-            }
-            Destroy(gameObject);
+            Destruct();
         }
+    }
+
+    public void Destruct()
+    {
+        int spawns;
+        if (TypeName == "asteroid") spawns = UnityEngine.Random.Range(0, 3);
+        else spawns = UnityEngine.Random.Range(2, 5);
+        for (int i = 0; i <= spawns; i++)
+        {
+            double theta = UnityEngine.Random.Range(0, 360) * Mathf.PI / 180;
+            double[] vector = RotateVector(new double[] { 0.01, 0 }, theta);
+            GameObject loot = Instantiate(Gem, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            var gs = loot.GetComponentInChildren<GemScript>();
+            gs.Launch(vector, 60);
+        }
+        // play explosion animation
+        Instantiate(Explosion, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+        // play explosion sfx
+        Sfx.Explosion();
+        Destroy(gameObject);
     }
 
     private double[] RotateVector(double[] vector, double theta)
