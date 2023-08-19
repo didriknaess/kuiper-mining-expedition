@@ -10607,7 +10607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Obj: {fileID: 3339576111523199239, guid: 93be70bf2186948a4b3a6c494821b57b, type: 3}
-  Delay: 5.25
+  Delay: 5.5
   Spawnrate: 12
   HeightOffset: 3.5
 --- !u!4 &263485384
@@ -11330,7 +11330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Obj: {fileID: 6014814505022740029, guid: 30d33a00baddd4db9a0ccd41caaa9a46, type: 3}
-  Delay: 0.75
+  Delay: 1
   Spawnrate: 3
   HeightOffset: 3.5
 --- !u!1 &1170096458
@@ -21512,7 +21512,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 960, y: 480, z: 0}
+  m_LocalScale: {x: 1600, y: 600, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730932799}

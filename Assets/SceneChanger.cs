@@ -12,7 +12,11 @@ public class SceneChanger : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        else if (Input.GetKey(KeyCode.Space))
         {
             MoveToScene(1);
         }
