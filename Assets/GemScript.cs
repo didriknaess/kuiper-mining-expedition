@@ -119,8 +119,9 @@ public class GemScript : MonoBehaviour
         {
             if (!Logic.IsGameOver())
             {
-                if (Logic.Multiplier > 0f) { Logic.AddScore(Value * 2); }
-                else { Logic.AddScore(Value); }
+                if (Logic.Multiplier > 0f) Value *= 2;
+                Logic.AddScore(Value);
+                if (Logic.Score > PlayerPrefs.GetInt("HighScore", 0)) PlayerPrefs.SetInt("HighScore", Logic.Score);
             }
             Sfx.ItemPickup();
             Destroy(gameObject);

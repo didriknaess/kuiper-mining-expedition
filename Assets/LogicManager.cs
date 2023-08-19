@@ -6,6 +6,7 @@ public class LogicManager : MonoBehaviour
 {
     public int Score = 0;
     public Text ScoreText;
+    public GameObject HighScoreText;
     public GameObject GameOverScreen;
     public PlayerScript Player;
     private CapsuleCollider2D Collider;
@@ -22,7 +23,8 @@ public class LogicManager : MonoBehaviour
 
     public void Start()
     {
-        Collider = Player.GetComponentInChildren<CapsuleCollider2D>();
+        Collider = GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider2D>();
+        Debug.Log(Collider.gameObject.name);
     }
 
     [ContextMenu("Increase Score")]
@@ -40,6 +42,7 @@ public class LogicManager : MonoBehaviour
     public void GameOver()
     {
         GameOverScreen.SetActive(true);
+        if (Score > PlayerPrefs.GetInt("HighScore", 0)) HighScoreText.SetActive(true);
     }
 
     public bool IsGameOver()

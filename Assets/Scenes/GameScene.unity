@@ -159,7 +159,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5b31427c51aa740eb81f480bbbdeae4b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -351,7 +351,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8677615fdf6d54055bb34c3232defa2c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11100,7 +11100,6 @@ RectTransform:
   - {fileID: 449119171}
   - {fileID: 1730932799}
   - {fileID: 2086050038}
-  - {fileID: 1430852536}
   - {fileID: 922093494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11213,6 +11212,7 @@ Transform:
   m_LocalScale: {x: 53.669292, y: 53.669292, z: 53.669292}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1503196250}
   - {fileID: 1664059027}
   - {fileID: 466072280}
   m_Father: {fileID: 734698388}
@@ -11492,6 +11492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Score: 0
   ScoreText: {fileID: 2086050039}
+  HighScoreText: {fileID: 1503196249}
   GameOverScreen: {fileID: 922093493}
   Player: {fileID: 1892009673}
   Shield: {fileID: 1928999301}
@@ -11581,7 +11582,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.005, y: 0.03}
   m_Size: {x: 0.45, y: 0.84}
   m_Direction: 0
---- !u!1 &1430852535
+--- !u!1 &1503196249
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11589,49 +11590,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1430852536}
-  - component: {fileID: 1430852538}
-  - component: {fileID: 1430852537}
+  - component: {fileID: 1503196250}
+  - component: {fileID: 1503196252}
+  - component: {fileID: 1503196251}
   m_Layer: 5
-  m_Name: HighScore
+  m_Name: NewHighScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1430852536
+  m_IsActive: 0
+--- !u!224 &1503196250
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430852535}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1503196249}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.018632626, y: 0.018632626, z: 0.018632626}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 734698388}
+  m_Father: {fileID: 922093494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 348.33, y: 160}
-  m_SizeDelta: {x: 240, y: 120}
+  m_AnchoredPosition: {x: 0, y: 1.2}
+  m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1430852537
+--- !u!114 &1503196251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430852535}
+  m_GameObject: {fileID: 1503196249}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.48235297, g: 0.72156864, b: 0.6431373, a: 1}
+  m_Color: {r: 0.4666667, g: 0.7607844, b: 0.6666667, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11640,7 +11641,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 48
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
@@ -11651,14 +11652,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'High score: 0'
---- !u!222 &1430852538
+  m_Text: New High Score!
+--- !u!222 &1503196252
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1430852535}
+  m_GameObject: {fileID: 1503196249}
   m_CullTransparentMesh: 1
 --- !u!1 &1584309319
 GameObject:
@@ -16500,7 +16501,7 @@ GameObject:
   - component: {fileID: 1664059029}
   - component: {fileID: 1664059028}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16552,7 +16553,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 300
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

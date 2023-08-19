@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -34,7 +35,17 @@ public class PlayerScript : MonoBehaviour
         }
 
         // input handler
-        if (Input.GetKey(KeyCode.Space) && IsAlive)
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // restart
+            Logic.RestartGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            // go to menu scene
+            SceneManager.LoadScene(0);
+        }
+        else if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0) || Input.GetKey(KeyCode.UpArrow)) && IsAlive)
         {
             Body.gravityScale = -1.2f;
             if (Body.velocity.y > MaxVelocity) Body.velocity = Vector2.up * MaxVelocity;
@@ -44,7 +55,7 @@ public class PlayerScript : MonoBehaviour
             Body.gravityScale = 1.2f;
             if (Body.velocity.y < -MaxVelocity) Body.velocity = -Vector2.up * MaxVelocity;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && !IsAlive)
+        else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && !IsAlive)
         {
             Sfx.UnpauseMusic();
             Sfx.ButtonClicked();
@@ -60,7 +71,6 @@ public class PlayerScript : MonoBehaviour
     // collision detection
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision!");
         if (collision.gameObject.layer == 6) { }
         else if (IsAlive && Logic.Fist > 0f)
         {

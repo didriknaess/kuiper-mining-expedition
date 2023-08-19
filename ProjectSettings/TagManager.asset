@@ -7,6 +7,7 @@ TagManager:
   - Logic
   - Sfx
   - Asteroid
+  - HighScore
   layers:
   - Default
   - TransparentFX

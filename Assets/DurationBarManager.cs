@@ -10,7 +10,8 @@ public class DurationBarManager : MonoBehaviour
 
     void Update()
     {
-        if (Logic.Multiplier > 0f)
+        if (Logic.IsGameOver()) { gameObject.transform.position = new Vector3(0, -100, 0); }
+        else if (Logic.Multiplier > 0f)
         {
             Sfx.PauseMusic();
             Sfx.PlayActionTrack();
